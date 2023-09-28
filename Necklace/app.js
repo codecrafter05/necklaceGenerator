@@ -5,32 +5,27 @@ function generateImage() {
     const ctx = canvas.getContext('2d');
     
     const baseImage = new Image();
-    baseImage.src = "img/neck.png"; 
+    baseImage.src = "../img/neck.png";  // Path to the neck image
 
     baseImage.onload = function() {
-        // Draw the base image first
         ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
 
         const necklaceOverlay = new Image();
-        necklaceOverlay.src = "img/necklace.png"; 
+        necklaceOverlay.src = "../img/necklace.png";  // Path to the necklace image
 
         necklaceOverlay.onload = function() {
-            // Draw the necklace overlay
             ctx.drawImage(necklaceOverlay, 0, 0, canvas.width, canvas.height);
             
-            // Load texture for the text
             const textureImage = new Image();
-            textureImage.src = "img/gold.png"; // REPLACE with your texture path
+            textureImage.src = "../img/gold.png";  // Path to the gold texture
 
             textureImage.onload = function() {
                 const pattern = ctx.createPattern(textureImage, 'repeat');
                 ctx.fillStyle = pattern;
-                ctx.font = 'bold 20px Arial';
+                ctx.font = '50px "Aref Ruqaa Ink", cursive';  // Updated font
                 const textWidth = ctx.measureText(name).width;
                 ctx.fillText(name, (canvas.width - textWidth) / 2, canvas.height / 2);
             }
         }
     }
 }
-
-//end ofe the code is her 
