@@ -5,16 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Your Title Here</title>
     <link rel="stylesheet" href="style.css"> 
+      <!-- Google Fonts Links -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Aref+Ruqaa+Ink:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
     <form>
         <input type="text" id="nameInput" placeholder="Enter your name">
         <button type="button" onclick="generateImage()">Generate Image</button>
     </form>
-    <img id="baseImage" src="../img/neck.png">  <!-- Path to the neck image -->
-    <img id="necklaceOverlay" src="../img/necklace.png">  <!-- Path to the necklace image -->
+    <img id="baseImage" src="../img/neck.png">
+    <img id="necklaceOverlay" src="../img/necklace.png">
     <canvas id="outputCanvas" width="500" height="500"></canvas>
 
+
+
     <script src="app.js"></script>
+
 </body>
 </html>

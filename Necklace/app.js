@@ -22,7 +22,7 @@ function generateImage() {
             textureImage.onload = function() {
                 const pattern = ctx.createPattern(textureImage, 'repeat');
                 ctx.fillStyle = pattern;
-                ctx.font = 'bold 20px Arial';
+                ctx.font = '50px "Aref Ruqaa Ink", cursive';  // Updated font
                 const textWidth = ctx.measureText(name).width;
                 ctx.fillText(name, (canvas.width - textWidth) / 2, canvas.height / 2);
             }
