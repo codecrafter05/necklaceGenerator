@@ -1,0 +1,7 @@
+#baseImage, #necklaceOverlay {
+    display: none;
+}
+
+#outputCanvas {
+    border: 1px solid black;
+}
