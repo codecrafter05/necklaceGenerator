@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,6 +16,13 @@
             <img src="../img/logo.png" alt="Your Logo" class="logo">
         </div>
     </header>
+    <aside>
+        <!-- Thumbnail images for different backgrounds -->
+        <img src="../img/neck1_thumb.png" alt="Background 1" onclick="changeBackground('../img/neck1.png')" class="thumbnail">
+        <img src="../img/neck2_thumb.png" alt="Background 2" onclick="changeBackground('../img/neck2.png')" class="thumbnail">
+        <img src="../img/neck3_thumb.png" alt="Background 3" onclick="changeBackground('../img/neck3.png')" class="thumbnail">
+        <img src="../img/neck4_thumb.png" alt="Background 4" onclick="changeBackground('../img/neck4.png')" class="thumbnail">
+    </aside>
     <form>
         <input type="text" id="nameInput" placeholder="Enter your name">
         <button type="button" onclick="generateImage()">Generate Image</button>
