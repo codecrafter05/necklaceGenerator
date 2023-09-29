@@ -2,7 +2,7 @@ Certainly! Here's a basic README template for your gold shop website that genera
 
 # Gold Shop Necklace Generator
 
-![Gold Necklace Generator](logo.png)
+![Gold Necklace Generator](img/logo.png)
 
 ## Description
 
