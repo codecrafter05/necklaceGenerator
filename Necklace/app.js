@@ -1,5 +1,12 @@
 // app.js
 
+let currentBackground = "../img/neck.png"; // Default background image
+
+function changeBackground(backgroundImage) {
+    currentBackground = backgroundImage;
+    generateImage();
+}
+
 function generateImage() {
     const name = document.getElementById('nameInput').value;
     
@@ -7,9 +14,10 @@ function generateImage() {
     const ctx = canvas.getContext('2d');
     
     const baseImage = new Image();
-    baseImage.src = "../img/neck.png";  // Path to the neck image
+    baseImage.src = currentBackground;  // Use the current background image
 
     baseImage.onload = function() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
         ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
 
         const necklaceOverlay = new Image();
@@ -24,10 +32,15 @@ function generateImage() {
             textureImage.onload = function() {
                 const pattern = ctx.createPattern(textureImage, 'repeat');
                 ctx.fillStyle = pattern;
-                ctx.font = '50px "Aref Ruqaa Ink", cursive';  // Updated font
+                ctx.font = '15px "Aref Ruqaa Ink", cursive';  // Updated font size
                 const textWidth = ctx.measureText(name).width;
-                ctx.fillText(name, (canvas.width - textWidth) / 2, canvas.height / 2);
+                const textX = (canvas.width - textWidth) / 1.88;
+                const textY = canvas.height - 50; // Adjust the vertical position
+                ctx.fillText(name, textX, textY);
             }
         }
     }
 }
+
+// Initial image generation
+generateImage();
