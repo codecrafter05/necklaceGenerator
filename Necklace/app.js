@@ -24,9 +24,11 @@ function generateImage() {
             textureImage.onload = function() {
                 const pattern = ctx.createPattern(textureImage, 'repeat');
                 ctx.fillStyle = pattern;
-                ctx.font = '50px "Aref Ruqaa Ink", cursive';  // Updated font
+                ctx.font = '15px "Aref Ruqaa Ink", cursive';  // Updated font size
                 const textWidth = ctx.measureText(name).width;
-                ctx.fillText(name, (canvas.width - textWidth) / 2, canvas.height / 2);
+                const textX = (canvas.width - textWidth) / 1.88;
+                const textY = canvas.height - 50; // Adjust the vertical position
+                ctx.fillText(name, textX, textY);
             }
         }
     }
