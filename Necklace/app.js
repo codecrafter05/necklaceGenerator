@@ -1,3 +1,5 @@
+// app.js
+
 function generateImage() {
     const name = document.getElementById('nameInput').value;
     
