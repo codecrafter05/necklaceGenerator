@@ -97,10 +97,10 @@ aside {
 }
 
 
-
 /* Updated styles for the thumbnails to center them vertically */
+
 .thumbnail {
-    width: 100px;
+    width: 100px; /* Adjust the width as needed to fit within the sidebar */
     height: auto;
     margin: 10px 0;
     cursor: pointer;

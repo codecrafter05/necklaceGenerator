@@ -1,9 +1,18 @@
+// app.js
+
 let currentBackground = "../img/neck.png"; // Default background image
 let isButtonClicked = false; // Track if the button is clicked
 
 function changeBackground(backgroundImage) {
     currentBackground = backgroundImage;
     generateImage();
+}
+
+function toggleThumbnailVisibility() {
+    const thumbnails = document.querySelectorAll('.thumbnail');
+    thumbnails.forEach((thumbnail) => {
+        thumbnail.style.display = 'block'; // Show the thumbnails
+    });
 }
 
 function generateImage() {
@@ -36,6 +45,9 @@ function generateImage() {
                     ctx.fillText(name, textX, textY);
                 }
             }
+        } else {
+            // If the button is not clicked, hide the thumbnails
+            toggleThumbnailVisibility();
         }
     }
 }
