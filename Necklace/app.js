@@ -53,7 +53,6 @@ function panImage(event) {
     // Calculate the maximum allowable canvas position to prevent revealing the background
     const maxCanvasXLeft = 0; // Maximum canvas position on the left (top-left corner)
     const maxCanvasYTop = 0; // Maximum canvas position on the top (top-left corner)
-
     const maxCanvasXRight = canvas.width - (canvas.width * zoomFactor); // Maximum canvas position on the right (bottom-right corner)
     const maxCanvasYBottom = canvas.height - (canvas.height * zoomFactor); // Maximum canvas position on the bottom (bottom-right corner)
 
@@ -61,7 +60,7 @@ function panImage(event) {
     canvasX += panX;
     canvasY += panY;
 
-    // Ensure that the canvas position stays within the maximum limits to prevent revealing the background
+    // Ensure the canvas position stays within the maximum limits to prevent revealing the background
     canvasX = Math.min(Math.max(canvasX, maxCanvasXRight), maxCanvasXLeft);
     canvasY = Math.min(Math.max(canvasY, maxCanvasYBottom), maxCanvasYTop);
 
@@ -81,7 +80,7 @@ function generateImage() {
     const canvas = document.getElementById('outputCanvas');
     const ctx = canvas.getContext('2d');
     const baseImage = new Image();
-    baseImage.src = currentBackground; // Use the current background image
+    baseImage.src = currentBackground;
 
     baseImage.onload = function () {
         ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
@@ -89,46 +88,37 @@ function generateImage() {
         // Calculate the scaled dimensions for the canvas
         const scaledWidth = canvas.width * zoomFactor;
         const scaledHeight = canvas.height * zoomFactor;
-
-        // Calculate translation to keep the image centered when zoomed in
         const translateX = (canvas.width - scaledWidth) / 2;
         const translateY = (canvas.height - scaledHeight) / 2;
 
-        // Draw the base image with scaling, translation, and position adjustments
         ctx.drawImage(baseImage, canvasX + translateX, canvasY + translateY, scaledWidth, scaledHeight);
 
         if (isButtonClicked) {
             const necklaceOverlay = new Image();
-            necklaceOverlay.src = "../img/necklace.png"; // Path to the necklace image
-
+            necklaceOverlay.src = "../img/necklace.png";
             necklaceOverlay.onload = function () {
-                // Draw the necklace overlay with scaling and position adjustments
                 ctx.drawImage(necklaceOverlay, canvasX + translateX, canvasY + translateY, scaledWidth, scaledHeight);
 
                 const textureImage = new Image();
-                textureImage.src = "../img/gold.png"; // Path to the gold texture
-
+                textureImage.src = "../img/gold.png";
                 textureImage.onload = function () {
                     const pattern = ctx.createPattern(textureImage, 'repeat');
                     ctx.fillStyle = pattern;
                     const textFontSize = 15 * zoomFactor; // Adjust font size with zoom
-                    ctx.font = `${textFontSize}px "Aref Ruqaa Ink", cursive`; // Updated font size
+                    ctx.font = `${textFontSize}px "Noto Nastaliq Urdu"`;
 
-                    // Calculate the text position based on the scaled canvas size
                     const textWidth = ctx.measureText(name).width;
                     const textX = canvasX + translateX + (scaledWidth - textWidth) / 1.86;
                     const textY = canvasY + translateY + scaledHeight - (48 * zoomFactor); // Adjust vertical position with zoom
-                    
+
                     // Add a drop shadow to the text
                     ctx.shadowColor = 'rgba(0, 0, 0, 0.5)'; // Shadow color
                     ctx.shadowBlur = 5 * zoomFactor; // Shadow blur radius
                     ctx.shadowOffsetX = 2 * zoomFactor; // Shadow X offset
                     ctx.shadowOffsetY = 2 * zoomFactor; // Shadow Y offset
 
-                    // Draw the text with the drop shadow
                     ctx.fillText(name, textX, textY);
-                    
-                    // Reset shadow settings
+
                     ctx.shadowColor = 'transparent';
                     ctx.shadowBlur = 0;
                     ctx.shadowOffsetX = 0;
@@ -136,10 +126,20 @@ function generateImage() {
                 };
             };
         } else {
-            // If the button is not clicked, hide the thumbnails
             toggleThumbnailVisibility();
         }
     };
+}
+
+function downloadImage() {
+    const canvas = document.getElementById('outputCanvas');
+    const imageDataURL = canvas.toDataURL('image/png').replace("image/png", "image/octet-stream"); 
+    const downloadLink = document.createElement('a');
+    downloadLink.href = imageDataURL;
+    downloadLink.download = 'generated-image.png';
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
 }
 
 
@@ -151,14 +151,11 @@ document.getElementById('zoomOutButton').addEventListener('click', zoomOut);
 const canvas = document.getElementById('outputCanvas');
 canvas.addEventListener('mousedown', startPan);
 canvas.addEventListener('touchstart', startPan);
-
 canvas.addEventListener('mousemove', panImage);
 canvas.addEventListener('touchmove', panImage);
-
 canvas.addEventListener('mouseup', endPan);
 canvas.addEventListener('touchend', endPan);
 
-// Add an event listener to track button click
 document.querySelector('button').addEventListener('click', function () {
     isButtonClicked = true;
     generateImage();
