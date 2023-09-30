@@ -118,7 +118,21 @@ function generateImage() {
                     const textWidth = ctx.measureText(name).width;
                     const textX = canvasX + translateX + (scaledWidth - textWidth) / 1.86;
                     const textY = canvasY + translateY + scaledHeight - (48 * zoomFactor); // Adjust vertical position with zoom
+                    
+                    // Add a drop shadow to the text
+                    ctx.shadowColor = 'rgba(0, 0, 0, 0.5)'; // Shadow color
+                    ctx.shadowBlur = 5 * zoomFactor; // Shadow blur radius
+                    ctx.shadowOffsetX = 2 * zoomFactor; // Shadow X offset
+                    ctx.shadowOffsetY = 2 * zoomFactor; // Shadow Y offset
+
+                    // Draw the text with the drop shadow
                     ctx.fillText(name, textX, textY);
+                    
+                    // Reset shadow settings
+                    ctx.shadowColor = 'transparent';
+                    ctx.shadowBlur = 0;
+                    ctx.shadowOffsetX = 0;
+                    ctx.shadowOffsetY = 0;
                 };
             };
         } else {
@@ -127,6 +141,7 @@ function generateImage() {
         }
     };
 }
+
 
 // Add event listeners for zoom buttons
 document.getElementById('zoomInButton').addEventListener('click', zoomIn);
