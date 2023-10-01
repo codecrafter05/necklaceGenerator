@@ -1,16 +1,16 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Your Professional Title</title>
+    <title>Necklace Generate</title>
     <link rel="stylesheet" href="style.css">
     <!-- Google Fonts Links -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
 </head>
-<body>
 <body>
     <header>
         <div class="logo-container">
@@ -19,10 +19,10 @@
     </header>
     <aside>
         <!-- Thumbnail images for different backgrounds -->
-        <img src="../img/model-01.png" alt="Background 1" onclick="changeBackground('../img/model-01.png')" class="thumbnail">
-        <img src="../img/model-02.png" alt="Background 2" onclick="changeBackground('../img/model-02.png')" class="thumbnail">
-        <img src="../img/model-03.png" alt="Background 3" onclick="changeBackground('../img/model-03.png')" class="thumbnail">
-        <img src="../img/model-04.png" alt="Background 4" onclick="changeBackground('../img/model-04.png')" class="thumbnail">
+        <img src="../img/model-01.png" alt="Background 1" onclick="changeBackground('../img/model-01.png', 0)" class="thumbnail">
+        <img src="../img/model-02.png" alt="Background 2" onclick="changeBackground('../img/model-02.png', 1)" class="thumbnail">
+        <img src="../img/model-03.png" alt="Background 3" onclick="changeBackground('../img/model-03.png', 2)" class="thumbnail">
+        <img src="../img/model-04.png" alt="Background 4" onclick="changeBackground('../img/model-04.png', 3)" class="thumbnail">
     </aside>
     <form>
         <input type="text" id="nameInput" placeholder="Enter your name">
@@ -43,3 +43,4 @@
     <script src="app.js"></script>
 </body>
 </html>
+<!-- end of the file -->

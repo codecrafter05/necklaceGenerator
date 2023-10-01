@@ -1,4 +1,5 @@
-let currentBackground = "../img/model-02.png"; // Default background image
+// Folder:app.js
+let currentBackground = "../img/model-01.png"; // Default background image
 let isButtonClicked = false; // Track if the button is clicked
 let zoomFactor = 1.0; // Initial zoom factor
 let canvasX = 0; // Initial canvas position (X)
@@ -6,14 +7,25 @@ let canvasY = 0; // Initial canvas position (Y)
 let isPanning = false; // Track if panning is in progress
 let panStartX = 0; // Initial panning start X-coordinate
 let panStartY = 0; // Initial panning start Y-coordinate
+let imageIndex = 0; // Index of the current image
 
 const MAX_ZOOM_IN = 3.0; // Maximum zoom in factor (300%)
 const MAX_ZOOM_OUT = 1.0; // Maximum zoom out factor (100%)
 
-function changeBackground(backgroundImage) {
+// Array to store image-specific text adjustment parameters
+const imageTextAdjustments = [
+    { fontSizeFactor: 1.5, textX: 15, textY: 0, rotationDegrees: 3 },
+    { fontSizeFactor: 2, textX: 10, textY: 6, rotationDegrees: 2 },
+    { fontSizeFactor: 2, textX: -20, textY: -166, rotationDegrees: 3 },
+    { fontSizeFactor: 3, textX: 0, textY: -50, rotationDegrees: 1 },
+];
+
+function changeBackground(backgroundImage, newIndex) {
     currentBackground = backgroundImage;
+    imageIndex = newIndex; // Set the imageIndex based on the selected background
     generateImage();
 }
+
 
 function toggleThumbnailVisibility() {
     const thumbnails = document.querySelectorAll('.thumbnail');
@@ -93,43 +105,61 @@ function generateImage() {
 
         ctx.drawImage(baseImage, canvasX + translateX, canvasY + translateY, scaledWidth, scaledHeight);
 
-        if (isButtonClicked) {
+        // Check if the current background image is one of the images to hide the necklace
+        if (currentBackground === "../img/model-02.png" || currentBackground === "../img/model-03.png" || currentBackground === "../img/model-04.png") {
+            // Do not draw the necklace overlay
+        } else {
             const necklaceOverlay = new Image();
             necklaceOverlay.src = "../img/necklace.png";
             necklaceOverlay.onload = function () {
                 ctx.drawImage(necklaceOverlay, canvasX + translateX, canvasY + translateY, scaledWidth, scaledHeight);
-
-                const textureImage = new Image();
-                textureImage.src = "../img/gold.png";
-                textureImage.onload = function () {
-                    const pattern = ctx.createPattern(textureImage, 'repeat');
-                    ctx.fillStyle = pattern;
-                    const textFontSize = 15 * zoomFactor; // Adjust font size with zoom
-                    ctx.font = `${textFontSize}px "Noto Nastaliq Urdu"`;
-
-                    const textWidth = ctx.measureText(name).width;
-                    const textX = canvasX + translateX + (scaledWidth - textWidth) / 1.86;
-                    const textY = canvasY + translateY + scaledHeight - (48 * zoomFactor); // Adjust vertical position with zoom
-
-                    // Add a drop shadow to the text
-                    ctx.shadowColor = 'rgba(0, 0, 0, 0.5)'; // Shadow color
-                    ctx.shadowBlur = 5 * zoomFactor; // Shadow blur radius
-                    ctx.shadowOffsetX = 2 * zoomFactor; // Shadow X offset
-                    ctx.shadowOffsetY = 2 * zoomFactor; // Shadow Y offset
-
-                    ctx.fillText(name, textX, textY);
-
-                    ctx.shadowColor = 'transparent';
-                    ctx.shadowBlur = 0;
-                    ctx.shadowOffsetX = 0;
-                    ctx.shadowOffsetY = 0;
-                };
             };
-        } else {
-            toggleThumbnailVisibility();
         }
+
+        const textureImage = new Image();
+        textureImage.src = "../img/gold.png";
+        textureImage.onload = function () {
+            const pattern = ctx.createPattern(textureImage, 'repeat');
+            ctx.fillStyle = pattern;
+
+            // Use the image-specific text adjustments
+            const textParams = imageTextAdjustments[imageIndex];
+            const textFontSize = 15 * textParams.fontSizeFactor * zoomFactor; // Adjust font size with zoom
+            ctx.font = `${textFontSize}px "Noto Nastaliq Urdu"`;
+
+            // Calculate the text position with respect to the zoom factor
+            const textWidth = ctx.measureText(name).width;
+            const textX = canvasX + translateX + (scaledWidth - textWidth) / 2 + textParams.textX * zoomFactor;
+            const textY = canvasY + translateY + scaledHeight - (48 * zoomFactor) + textParams.textY * zoomFactor;
+
+            // Apply rotation to the text
+            const centerX = textX + textWidth / 2;
+            const centerY = textY - textFontSize / 2;
+            ctx.translate(centerX, centerY);
+            ctx.rotate((Math.PI / 180) * textParams.rotationDegrees);
+            ctx.translate(-centerX, -centerY);
+
+            // Add a drop shadow to the text
+            ctx.shadowColor = 'rgba(0, 0, 0, 0.5)'; // Shadow color
+            ctx.shadowBlur = 5 * textParams.fontSizeFactor * zoomFactor; // Shadow blur radius
+            ctx.shadowOffsetX = 2 * textParams.fontSizeFactor * zoomFactor; // Shadow X offset
+            ctx.shadowOffsetY = 2 * textParams.fontSizeFactor * zoomFactor; // Shadow Y offset
+
+            ctx.fillText(name, textX, textY);
+
+            // Reset the rotation and shadow
+            ctx.setTransform(1, 0, 0, 1, 0, 0);
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetX = 0;
+            ctx.shadowOffsetY = 0;
+        };
     };
 }
+
+
+
+
 
 function downloadImage() {
     const canvas = document.getElementById('outputCanvas');
@@ -141,7 +171,6 @@ function downloadImage() {
     downloadLink.click();
     document.body.removeChild(downloadLink);
 }
-
 
 // Add event listeners for zoom buttons
 document.getElementById('zoomInButton').addEventListener('click', zoomIn);
@@ -163,3 +192,5 @@ document.querySelector('button').addEventListener('click', function () {
 
 // Initial image generation
 generateImage();
+
+// end of the file
