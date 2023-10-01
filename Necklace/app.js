@@ -9,6 +9,7 @@ let panStartX = 0; // Initial panning start X-coordinate
 let panStartY = 0; // Initial panning start Y-coordinate
 let imageIndex = 0; // Index of the current image
 
+
 const MAX_ZOOM_IN = 3.0; // Maximum zoom in factor (300%)
 const MAX_ZOOM_OUT = 1.0; // Maximum zoom out factor (100%)
 
@@ -106,7 +107,10 @@ function generateImage() {
         ctx.drawImage(baseImage, canvasX + translateX, canvasY + translateY, scaledWidth, scaledHeight);
 
         // Check if the current background image is one of the images to hide the necklace
-        if (currentBackground === "../img/model-02.png" || currentBackground === "../img/model-03.png" || currentBackground === "../img/model-04.png") {
+        if (currentBackground === "../img/model-02.png" ||
+            currentBackground === "../img/model-03.png" ||
+            currentBackground === "../img/model-04.png" ||
+            currentBackground === "../img/model-05.png") {
             // Do not draw the necklace overlay
         } else {
             const necklaceOverlay = new Image();
@@ -115,6 +119,7 @@ function generateImage() {
                 ctx.drawImage(necklaceOverlay, canvasX + translateX, canvasY + translateY, scaledWidth, scaledHeight);
             };
         }
+
 
         const textureImage = new Image();
         textureImage.src = "../img/gold.png";
@@ -163,7 +168,7 @@ function generateImage() {
 
 function downloadImage() {
     const canvas = document.getElementById('outputCanvas');
-    const imageDataURL = canvas.toDataURL('image/png').replace("image/png", "image/octet-stream"); 
+    const imageDataURL = canvas.toDataURL('image/png').replace("image/png", "image/octet-stream");
     const downloadLink = document.createElement('a');
     downloadLink.href = imageDataURL;
     downloadLink.download = 'generated-image.png';
