@@ -1,4 +1,4 @@
-// app.js
+// Folder:app.js
 let currentBackground = "../img/model-01.png"; // Default background image
 let isButtonClicked = false; // Track if the button is clicked
 let zoomFactor = 1.0; // Initial zoom factor
