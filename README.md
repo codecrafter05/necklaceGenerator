@@ -27,6 +27,11 @@ The Gold Shop Necklace Generator is a web application that allows users to creat
 
 ```
 git clone https://github.com/mqarooni/Necklace-Generator.git
+
+npm install -g http-server
+cd /path/to/your/project
+http-server
+
 ```
 
 2. Open the `index.html` file in your web browser to access the application.
