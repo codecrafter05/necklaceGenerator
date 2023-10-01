@@ -114,4 +114,166 @@ aside {
     cursor: pointer;
 }
 
+
+/* Media query for tablets and smaller screens */
+@media (max-width: 768px) {
+    aside {
+        width: 100%; /* Taking full width on small screens */
+        position: relative; /* Reset to normal positioning */
+        height: auto; /* Auto height */
+        flex-direction: row; /* To line up thumbnails horizontally */
+        overflow-x: auto; /* Add horizontal scroll if thumbnails exceed width */
+        white-space: nowrap; /* Prevents wrapping */
+    }
+
+    .thumbnail {
+        margin: 0 5px; /* Adjust spacing for thumbnails */
+    }
+
+    form {
+        display: flex; /* Changing the form layout to a row */
+        flex-wrap: wrap; /* Allow the content to wrap */
+        justify-content: center; /* Centering items */
+    }
+
+    button {
+        margin: 5px; /* Add some margin around buttons */
+    }
+}
+
+/* Media query for mobile phones and very small screens */
+@media (max-width: 480px) {
+    canvas {
+        width: 90%; /* Adjust canvas width for mobile */
+        height: auto; /* Adjust canvas height for mobile */
+        display: block; /* Ensuring block display for correct margins */
+        margin: 20px auto; /* Centering the canvas */
+    }
+
+    input[type="text"] {
+        width: 90%; /* Making input wider for better UX */
+        margin: 20px auto; /* Centering the input */
+    }
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+@media (max-width: 600px) {
+    aside {
+        width: 100%;
+        position: static; 
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+
+    .thumbnail {
+        width: 30%; 
+        margin: 5px;
+    }
+
+    form, canvas {
+        width: 100%;
+    }
+}
+
+@media (min-width: 601px) and (max-width: 1024px) {
+    aside {
+        width: 20%;
+    }
+
+    .thumbnail {
+        width: 70%; 
+    }
+
+    form, canvas {
+        width: 75%;
+    }
+}
+@media (max-width: 600px) {
+    body {
+        font-size: 16px;
+    }
+}
+/* ... (Rest of your CSS) ... */
+
+/* Common mobile styles */
+@media (max-width: 768px) {
+    aside {
+        width: 100%;
+        position: relative;
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        overflow-x: auto;
+    }
+
+    .thumbnail {
+        width: 45%; /* Adjust to your preference */
+        margin: 5px;
+    }
+
+    canvas, form, input[type="text"], button {
+        width: 90%;
+        margin: 10px auto;
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+/* Adjustments for very small screens */
+@media (max-width: 480px) {
+    .thumbnail {
+        width: 70%; /* Adjust to your preference */
+
+    }
+}
+@media (max-width: 768px) {
+    /* ... (existing styles) ... */
+    .thumbnail {
+        width: auto; /* Let images take their natural width, or set a maximum width */
+        max-width: 70%; /* Adjust to your preference */
+        margin: 5px;
+    }
+}
+@media (min-width: 768px) and (max-width: 1024px) {
+    aside {
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        width: 100%;
+        position: relative;
+        padding: 20px 0;
+        height: auto;
+    }
+
+    .thumbnail {
+        width: 30%; /* you can adjust this based on your preference */
+        margin: 10px 5px; 
+        display: inline-block;
+    }
+
+    form, canvas {
+        width: 95%;
+        margin-left: 2.5%; /* To center it horizontally */
+    }
+}
+aside {
+    /* ... (existing styles) ... */
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Horizontally center the content */
+    align-items: center; /* Vertically center the content */
+}
 /* end of the file */
