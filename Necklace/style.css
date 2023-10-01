@@ -108,4 +108,10 @@ aside {
     border-radius: 10%;
 }
 
+
+.thumbnail:hover {
+    opacity: 0.7;
+    cursor: pointer;
+}
+
 /* end of the file */
