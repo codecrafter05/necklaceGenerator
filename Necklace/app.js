@@ -20,6 +20,8 @@ const imageTextAdjustments = [
   { fontSizeFactor: 3, textX: 0, textY: -50, rotationDegrees: 1 },
 ];
 
+let isNecklaceVisible = false; // Track if the necklace is visible
+
 function changeBackground(backgroundImage, newIndex) {
   currentBackground = backgroundImage;
   imageIndex = newIndex; // Set the imageIndex based on the selected background
@@ -75,6 +77,7 @@ function panImage(event) {
 function endPan() {
   isPanning = false;
 }
+
 function generateImage() {
     const name = document.getElementById("nameInput").value;
     const canvas = document.getElementById("outputCanvas");
@@ -107,18 +110,23 @@ function generateImage() {
         currentBackground === "../img/model-05.png"
       ) {
         // Do not draw the necklace overlay
+        isNecklaceVisible = false;
       } else {
-        const necklaceOverlay = new Image();
-        necklaceOverlay.src = "../img/necklace.png";
-        necklaceOverlay.onload = function () {
-          ctx.drawImage(
-            necklaceOverlay,
-            canvasX + translateX,
-            canvasY + translateY,
-            scaledWidth,
-            scaledHeight
-          );
-        };
+        // Necklace should be visible only if the "Generate Image" button is clicked
+        if (isButtonClicked) {
+          isNecklaceVisible = true;
+          const necklaceOverlay = new Image();
+          necklaceOverlay.src = "../img/necklace.png";
+          necklaceOverlay.onload = function () {
+            ctx.drawImage(
+              necklaceOverlay,
+              canvasX + translateX,
+              canvasY + translateY,
+              scaledWidth,
+              scaledHeight
+            );
+          };
+        }
       }
   
       const textureImage = new Image();
@@ -161,7 +169,6 @@ function generateImage() {
       };
     };
   }
-  
 
 function downloadImage() {
   const canvas = document.getElementById("outputCanvas");
