@@ -76,117 +76,92 @@ function endPan() {
   isPanning = false;
 }
 function generateImage() {
-  const name = document.getElementById("nameInput").value;
-  const canvas = document.getElementById("outputCanvas");
-  const ctx = canvas.getContext("2d");
-  const baseImage = new Image();
-  baseImage.src = currentBackground;
-
-  baseImage.onload = function () {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
-
-    // Calculate the scaled dimensions for the canvas
-    const scaledWidth = canvas.width * zoomFactor;
-    const scaledHeight = canvas.height * zoomFactor;
-    const translateX = (canvas.width - scaledWidth) / 2;
-    const translateY = (canvas.height - scaledHeight) / 2;
-
-    ctx.drawImage(
-      baseImage,
-      canvasX + translateX,
-      canvasY + translateY,
-      scaledWidth,
-      scaledHeight
-    );
-
-    // Check if the current background image is one of the images to hide the necklace
-    if (
-      currentBackground === "../img/model-02.png" ||
-      currentBackground === "../img/model-03.png" ||
-      currentBackground === "../img/model-04.png" ||
-      currentBackground === "../img/model-05.png"
-    ) {
-      // Do not draw the necklace overlay
-    } else {
-      const necklaceOverlay = new Image();
-      necklaceOverlay.src = "../img/necklace.png";
-      necklaceOverlay.onload = function () {
-        ctx.drawImage(
-          necklaceOverlay,
-          canvasX + translateX,
-          canvasY + translateY,
-          scaledWidth,
-          scaledHeight
-        );
-      };
-    }
-
-    const textureImage = new Image();
-    textureImage.src = "../img/gold.png";
-    textureImage.onload = function () {
-      const pattern = ctx.createPattern(textureImage, "repeat");
-      ctx.fillStyle = pattern;
-
-      // Calculate the length of the necklace (example)
-      const necklaceLength = scaledWidth; // Use the width of the necklace as the length
-
-      // Calculate the position for the name text
-      const textLength = ctx.measureText(name).width;
-      const gapBetweenPoints = necklaceLength - textLength;
-      const anchorPoint1X = translateX + 250 * zoomFactor + canvasX;
-      const anchorPoint2X =
-        translateX + scaledWidth - 220 * zoomFactor + canvasX;
-
-      // Calculate the midpoint between the anchor points
-      const midpointX = (anchorPoint1X + anchorPoint2X) / 2;
-
-      // Calculate the text position to center it between the anchor points
-      const textPositionX = midpointX - textLength / 2;
-      const textPositionY =
-        translateY + scaledHeight - 48 * zoomFactor + canvasY; // Include canvasY
-
-      // Draw the left anchor point (red dot) on the canvas
-      const anchorPointSize = 5 * zoomFactor; // Adjust the size as needed
-      ctx.fillStyle = "red"; // Set the color of the anchor point
-      ctx.beginPath();
-      ctx.arc(anchorPoint1X, textPositionY, anchorPointSize, 0, 2 * Math.PI);
-      ctx.fill();
-
-      // Draw the right anchor point (red dot) on the canvas
-      ctx.beginPath();
-      ctx.arc(
-        anchorPoint2X,
-        textPositionY - 6 * zoomFactor,
-        anchorPointSize,
-        0,
-        2 * Math.PI
+    const name = document.getElementById("nameInput").value;
+    const canvas = document.getElementById("outputCanvas");
+    const ctx = canvas.getContext("2d");
+    const baseImage = new Image();
+    baseImage.src = currentBackground;
+  
+    baseImage.onload = function () {
+      ctx.clearRect(0, 0, canvas.width, canvas.height); // Clear the canvas
+  
+      // Calculate the scaled dimensions for the canvas
+      const scaledWidth = canvas.width * zoomFactor;
+      const scaledHeight = canvas.height * zoomFactor;
+      const translateX = (canvas.width - scaledWidth) / 2;
+      const translateY = (canvas.height - scaledHeight) / 2;
+  
+      ctx.drawImage(
+        baseImage,
+        canvasX + translateX,
+        canvasY + translateY,
+        scaledWidth,
+        scaledHeight
       );
-      ctx.fill();
-
-      // Calculate the font size based on the width of the anchor points
-      const maxFontSize = 40; // Adjust as needed
-      const minFontSize = 10; // Adjust as needed
-      let fontSize = maxFontSize; // Start with the maximum font size
-
-      // Calculate the maximum allowable font size based on the width of the anchor points
-      const maxAllowedFontSize = gapBetweenPoints;
-
-      // Ensure the font size is within the specified range
-      fontSize = Math.max(Math.min(fontSize, maxAllowedFontSize), minFontSize);
-
-      // Set the font size
-      ctx.font = `${fontSize}px "Noto Nastaliq Urdu"`;
-
-      // Calculate the adjusted text position to center it
-      const textWidth = ctx.measureText(name).width;
-      const textOffsetX = textPositionX + (textLength - textWidth) / 2;
-      const textOffsetY = textPositionY;
-
-      // Now, use textOffsetX and textOffsetY to draw the text on the canvas
-      ctx.fillText(name, textOffsetX, textOffsetY);
+  
+      // Check if the current background image is one of the images to hide the necklace
+      if (
+        currentBackground === "../img/model-02.png" ||
+        currentBackground === "../img/model-03.png" ||
+        currentBackground === "../img/model-04.png" ||
+        currentBackground === "../img/model-05.png"
+      ) {
+        // Do not draw the necklace overlay
+      } else {
+        const necklaceOverlay = new Image();
+        necklaceOverlay.src = "../img/necklace.png";
+        necklaceOverlay.onload = function () {
+          ctx.drawImage(
+            necklaceOverlay,
+            canvasX + translateX,
+            canvasY + translateY,
+            scaledWidth,
+            scaledHeight
+          );
+        };
+      }
+  
+      const textureImage = new Image();
+      textureImage.src = "../img/gold.png";
+      textureImage.onload = function () {
+        const pattern = ctx.createPattern(textureImage, "repeat");
+        ctx.fillStyle = pattern;
+  
+        // Calculate the length of the necklace (example)
+        const necklaceLength = scaledWidth; // Use the width of the necklace as the length
+  
+        // Calculate the position for the name text
+        const anchorPoint1X = translateX + 245 * zoomFactor + canvasX;
+        const anchorPoint2X =
+          translateX + scaledWidth - 220 * zoomFactor + canvasX;
+  
+        // Calculate the maximum allowable font size based on the width of the anchor points
+        const maxAllowedFontSize = anchorPoint2X - anchorPoint1X;
+  
+        // Calculate the font size based on the maximum allowable size and the text length
+        let fontSize = maxAllowedFontSize; // Start with the maximum allowable font size
+        while (fontSize > 0) {
+          ctx.font = `${fontSize}px "Noto Nastaliq Urdu"`;
+          const textWidth = ctx.measureText(name).width;
+          if (textWidth <= maxAllowedFontSize) {
+            break;
+          }
+          fontSize--;
+        }
+  
+        // Calculate the adjusted text position to center it
+        const textWidth = ctx.measureText(name).width;
+        const textPositionX =
+          anchorPoint1X + (maxAllowedFontSize - textWidth) / 2; // Adjust as needed
+        const textPositionY =
+          translateY + scaledHeight - 48 * zoomFactor + canvasY; // Include canvasY
+  
+        // Now, use textPositionX and textPositionY to draw the text on the canvas
+        ctx.fillText(name, textPositionX, textPositionY);
+      };
     };
-  };
-}
+  }
+  
 
 function downloadImage() {
   const canvas = document.getElementById("outputCanvas");
